@@ -137,7 +137,7 @@ class Library {
         return result;
     }
 
-    // Метод для поиска книг по году публикации
+
     public List<Book> findBooksByYear(int year) {
         List<Book> result = new ArrayList<>();
         for (Book book : books) {
@@ -437,6 +437,14 @@ class ComplexNumber {
         double realPart = (this.real * other.real + this.imaginary * other.imaginary) / denominator;
         double imaginaryPart = (this.imaginary * other.real - this.real * other.imaginary) / denominator;
         return new ComplexNumber(realPart, imaginaryPart);
+    }
+    @Override
+    public String toString() {
+        if (imaginary >= 0) {
+            return real + " + " + imaginary + "i";
+        } else {
+            return real + " - " + (-imaginary) + "i";
+        }
     }
 }
 
@@ -796,7 +804,7 @@ class Laptop extends Device {
 
 
 
-public class Main
+public class Main3
 {
     public static void main(String[] args) {
         ////////////////////////////////////////////////////////////////
@@ -931,10 +939,16 @@ public class Main
         //Задача 15
         System.out.println("/////////////////////////////////Задача 15");
 
-        ComplexNumber num1 = new ComplexNumber(3, 2);
-        ComplexNumber num2 = new ComplexNumber(1, 7);
-        ComplexNumber sum = num1.add(num2);
-        System.out.println("Сумма: " + sum.real + " + " + sum.imaginary + "i");
+        ComplexNumber num1 = new ComplexNumber(2, 3);
+        ComplexNumber num2 = new ComplexNumber(1, -2);
+
+        System.out.println("num1: " + num1);
+        System.out.println("num2: " + num2);
+
+        System.out.println("Сложение: " + num1.add(num2));
+        System.out.println("Вычитание: " + num1.subtract(num2));
+        System.out.println("Умножение: " + num1.multiply(num2));
+        System.out.println("Деление: " + num1.divide(num2));
 
         ////////////////////////////////////////////////////////////////
         //Задача 16
@@ -993,11 +1007,9 @@ public class Main
         system.placeOrder(customer1, List.of(product1, product2));
         system.placeOrder(customer2, List.of(product2, product3));
 
-        // Вывод истории заказов
         system.printOrderHistory();
 
-        // Вычисление общей выручки
-        System.out.println("Total Revenue: $" + system.calculateTotalRevenue());
+        System.out.println("Итоговая сумма: $" + system.calculateTotalRevenue());
 
         ////////////////////////////////////////////////////////////////
         //Задача 19
