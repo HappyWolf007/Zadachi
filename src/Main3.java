@@ -591,7 +591,7 @@ class Enemy {
 
     public void attack(Player player) {
         Random random = new Random();
-        int damage = random.nextInt(10) + 1; // Урон врага от 1 до 10
+        int damage = random.nextInt(10) + 1; 
         System.out.println(name + " атаковал " + player.getName() + " и нанёс " + damage + " урона");
         player.takeDamage(damage);
     }
@@ -694,12 +694,12 @@ class Order {
  class OrderManagementSystem {
     private List<Order> orders;
 
-    // Конструктор
+    
     public OrderManagementSystem() {
         this.orders = new ArrayList<>();
     }
 
-    // Метод для добавления нового заказа
+   
     public void placeOrder(Customer customer, List<Product> products) {
         Order order = new Order(customer);
         for (Product product : products) {
@@ -709,7 +709,7 @@ class Order {
         System.out.println("ID заказа: " + order.getOrderId());
     }
 
-    // Метод для вывода истории заказов
+
     public void printOrderHistory() {
         System.out.println("История заказов: ");
         for (Order order : orders) {
