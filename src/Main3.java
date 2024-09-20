@@ -1,6 +1,7 @@
 import java.util.*;
 import java.util.stream.Collectors;
 import java.time.LocalDateTime;
+
 ////////////////////////////////////////////////////////////////
 //Задача 1
 class Person {
@@ -800,6 +801,159 @@ class Laptop extends Device {
 ////////////////////////////////////////////////////////////////
 //Задача 20
 
+class Board {
+    private char[][] board;
+    private final int SIZE = 3;
+
+    public Board() {
+        board = new char[SIZE][SIZE];
+
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                board[i][j] = '-';
+            }
+        }
+    }
+
+    public boolean placeMark(int row, int col, char mark) {
+        if (row >= 0 && row < SIZE && col >= 0 && col < SIZE && board[row][col] == '-') {
+            board[row][col] = mark;
+            return true;
+        }
+        return false;
+    }
+
+    public void displayBoard() {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                System.out.print(board[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public boolean checkWin(char mark) {
+
+        for (int i = 0; i < SIZE; i++) {
+            if (checkRow(i, mark) || checkCol(i, mark)) {
+                return true;
+            }
+        }
+
+        return checkDiagonal(mark);
+    }
+
+    private boolean checkRow(int row, char mark) {
+        for (int col = 0; col < SIZE; col++) {
+            if (board[row][col] != mark) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean checkCol(int col, char mark) {
+        for (int row = 0; row < SIZE; row++) {
+            if (board[row][col] != mark) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean checkDiagonal(char mark) {
+        boolean diagonal1 = true;
+        boolean diagonal2 = true;
+
+        for (int i = 0; i < SIZE; i++) {
+            if (board[i][i] != mark) {
+                diagonal1 = false;
+            }
+            if (board[i][SIZE - 1 - i] != mark) {
+                diagonal2 = false;
+            }
+        }
+        return diagonal1 || diagonal2;
+    }
+
+    public boolean isFull() {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (board[i][j] == '-') {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}
+
+ class Player {
+     private String name;
+     private char mark;
+
+     public Player(String name, char mark) {
+         this.name = name;
+         this.mark = mark;
+     }
+
+     public String getName() {
+         return name;
+     }
+
+     public char getMark() {
+         return mark;
+     }
+ }
+ class Game {
+    private Board board;
+    private Player player1;
+    private Player player2;
+    private Player currentPlayer;
+
+    public Game() {
+        board = new Board();
+        player1 = new Player("Игрок 1", 'X');
+        player2 = new Player("Игрок 2", 'O');
+        currentPlayer = player1; // Первый ход за Игроком 1
+    }
+
+    public void startGame() {
+        Scanner scanner = new Scanner(System.in);
+        boolean gameWon = false;
+
+        while (!gameWon && !board.isFull()) {
+            board.displayBoard();
+            System.out.println(currentPlayer.getName() + ", введите строку и столбец (0, 1 или 2): ");
+            int row = scanner.nextInt();
+            int col = scanner.nextInt();
+
+            if (board.placeMark(row, col, currentPlayer.getMark())) {
+                if (board.checkWin(currentPlayer.getMark())) {
+                    board.displayBoard();
+                    System.out.println(currentPlayer.getName() + " выиграл!");
+                    gameWon = true;
+                } else {
+                    // Смена игрока
+                    currentPlayer = (currentPlayer == player1) ? player2 : player1;
+                }
+            } else {
+                System.out.println("Неверный ход! Попробуйте снова.");
+            }
+        }
+
+        if (!gameWon) {
+            board.displayBoard();
+            System.out.println("Игра закончилась вничью!");
+        }
+
+        scanner.close();
+    }
+}
+
+
+
+
 
 
 
@@ -1029,7 +1183,8 @@ public class Main3
 
         ////////////////////////////////////////////////////////////////
         //Задача 20
-
+	Game game = new Game();
+        game.startGame();
 
     }
 
